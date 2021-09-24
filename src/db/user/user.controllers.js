@@ -1,5 +1,4 @@
 const { User } = require("./user.model");
-const bcrypt = require("bcryptjs");
 
 exports.addUser = async (req, res) => {
   try {
@@ -48,6 +47,7 @@ exports.loginUser = async (req, res) => {
   try {
     res.status(200).send({
       user: req.user,
+      accessToken: req.token,
       message: `Welcome back ${req.body.username}`,
     });
   } catch (error) {

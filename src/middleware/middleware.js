@@ -32,3 +32,23 @@ exports.decryptPassword = async (req, res, next) => {
     res.status(500).send(error);
   }
 };
+
+exports.createToken = async (req, res, next) => {
+  try {
+    const token = jwt.sign(
+      { username: req.body.username },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    req.token = token;
+    next();
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+exports.authenticateToken = async (req, res, next) => {
+  try {
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
