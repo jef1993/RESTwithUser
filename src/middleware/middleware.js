@@ -48,6 +48,19 @@ exports.createToken = async (req, res, next) => {
 
 exports.authenticateToken = async (req, res, next) => {
   try {
+    const authHeader = req.header("Authorization");
+    const authToken = authHeader && authHeader.split(" ")[1];
+    if (!authToken) res.status(401).send();
+
+    const decodedToken = jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
+    const user = await User.findOne({ username: decodedToken.username });
+
+    if (user === []) {
+      res.status(403).send();
+    } else {
+      req.user = user;
+      next();
+    }
   } catch (error) {
     res.status(500).send(error);
   }

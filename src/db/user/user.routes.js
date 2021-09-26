@@ -11,6 +11,7 @@ const {
   hashPassword,
   decryptPassword,
   createToken,
+  authenticateToken,
 } = require("../../middleware/middleware");
 
 const userRouter = Router();
