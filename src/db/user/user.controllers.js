@@ -5,7 +5,7 @@ exports.addUser = async (req, res) => {
     const newUser = new User(req.body);
     await newUser.save();
     res.status(200).send({
-      newUser: newUser,
+      user: newUser,
       message: `User ${newUser.username} successfully added.`,
     });
   } catch (error) {
@@ -48,7 +48,6 @@ exports.loginUser = async (req, res) => {
     res.status(200).send({
       user: req.user,
       accessToken: req.token,
-      message: `Welcome back ${req.body.username}`,
     });
   } catch (error) {
     res.status(500).send(error);

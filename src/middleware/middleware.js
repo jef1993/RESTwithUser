@@ -18,15 +18,19 @@ exports.hashPassword = async (req, res, next) => {
 exports.decryptPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    const passwordMatch = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (passwordMatch) {
-      req.user = user;
-      next();
+    if (!user) {
+      res.status(404).send({ message: `User doesn't exist` });
     } else {
-      res.status(403).send({ message: `Password incorrect` });
+      const passwordMatch = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      if (passwordMatch) {
+        req.user = user;
+        next();
+      } else {
+        res.status(403).send({ message: `Password is incorrect` });
+      }
     }
   } catch (error) {
     res.status(500).send(error);
@@ -65,3 +69,5 @@ exports.authenticateToken = async (req, res, next) => {
     res.status(500).send(error);
   }
 };
+
+exports.deleteToken = async (req, res, next) => {};

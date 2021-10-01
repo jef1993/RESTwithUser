@@ -24,4 +24,6 @@ userRouter.delete("/delete/:username", deleteUser);
 userRouter.post("/register", hashPassword, addUser);
 userRouter.post("/login", decryptPassword, createToken, loginUser);
 
+userRouter.post("/return", authenticateToken, loginUser);
+
 module.exports = userRouter;
