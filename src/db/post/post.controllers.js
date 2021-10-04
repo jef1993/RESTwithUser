@@ -37,7 +37,10 @@ exports.deletePost = async (req, res) => {
 
 exports.myPost = async (req, res) => {
   try {
-    const posts = await Post.find({ username: req.user.username });
+    const posts = await Post.find({
+      username: req.params.user,
+      title: { $regex: req.params.str },
+    });
     res.status(200).send(posts);
   } catch (error) {
     res.status(500).send(error);
@@ -72,9 +75,8 @@ exports.editMyPost = async (req, res) => {
 
 exports.deleteMyPost = async (req, res) => {
   try {
-    const posts = await Post.find({ username: req.user.username });
-    await Post.deleteOne({ _id: posts[req.body.post_number - 1]._id });
-    res.status(200).send({ message: `Post #${req.body.post_number} deleted!` });
+    const del = await Post.deleteOne({ _id: req.body._id });
+    res.status(200).send({ message: `Post deleted!`, del: del });
   } catch (error) {
     res.status(500).send(error);
   }

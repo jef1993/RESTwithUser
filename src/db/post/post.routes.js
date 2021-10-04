@@ -19,9 +19,9 @@ postRouter.post("/post", createPost);
 postRouter.patch("/post", editPost);
 postRouter.delete("/post/id=:id", deletePost);
 
-postRouter.get("/myPosts", authenticateToken, myPost);
+postRouter.get("/myPosts/:user/:str", myPost);
 postRouter.post("/myPosts", authenticateToken, createMyPost);
 postRouter.patch("/myPosts", authenticateToken, editMyPost);
-postRouter.delete("/myPosts", authenticateToken, deleteMyPost);
+postRouter.delete("/myPosts", deleteMyPost);
 
 module.exports = postRouter;

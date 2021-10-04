@@ -6,10 +6,10 @@ exports.addUser = async (req, res) => {
     await newUser.save();
     res.status(200).send({
       user: newUser,
-      message: `User ${newUser.username} successfully added.`,
+      message: `User successfully added.`,
     });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({ error: error, message: `Something went wrong` });
   }
 };
 exports.findUser = async (req, res) => {
@@ -46,6 +46,7 @@ exports.deleteUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     res.status(200).send({
+      status: 200,
       user: req.user,
       accessToken: req.token,
     });
